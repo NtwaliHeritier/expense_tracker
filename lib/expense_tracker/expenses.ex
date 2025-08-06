@@ -3,6 +3,8 @@ defmodule ExpenseTracker.Expenses do
   alias ExpenseTracker.Expenses.Expense
   alias ExpenseTracker.Repo
 
+  import Ecto.Query
+
   def add_expense_to_category(%{category_id: category_id, amount: amount} = attrs) do
     category = Categories.get_category(category_id)
 
@@ -28,5 +30,13 @@ defmodule ExpenseTracker.Expenses do
     %Expense{}
     |> Expense.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def get_latest_expense_by_category_id(category_id) do
+    Expense
+    |> where([e], e.category_id == ^category_id)
+    |> order_by(desc: :id)
+    |> limit(1)
+    |> Repo.one()
   end
 end
