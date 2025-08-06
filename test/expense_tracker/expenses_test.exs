@@ -61,7 +61,7 @@ defmodule ExpenseTracker.ExpensesTest do
       assert {:ok, [_expense1, _category]} = Expenses.add_expense_to_category(attrs1)
       assert {:ok, [expense2, _category]} = Expenses.add_expense_to_category(attrs2)
 
-      expense = Expenses.get_latest_expense_by_category_id(category.id)
+      expense = Expenses.get_recent_category_expense(category.id)
       assert expense.id === expense2.id
     end
   end

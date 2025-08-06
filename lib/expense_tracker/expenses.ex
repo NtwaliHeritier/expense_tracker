@@ -32,7 +32,7 @@ defmodule ExpenseTracker.Expenses do
     |> Repo.insert()
   end
 
-  def get_latest_expense_by_category_id(category_id) do
+  def get_recent_category_expense(category_id) do
     Expense
     |> where([e], e.category_id == ^category_id)
     |> order_by(desc: :id)

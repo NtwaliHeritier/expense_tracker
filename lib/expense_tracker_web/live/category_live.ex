@@ -2,6 +2,7 @@ defmodule ExpenseTrackerWeb.CategoryLive do
   use ExpenseTrackerWeb, :live_view
 
   alias ExpenseTracker.Categories
+  alias ExpenseTracker.Expenses
 
   def mount(%{"category_id" => category_id}, _session, socket) do
     category = Categories.get_category(category_id)
@@ -12,7 +13,15 @@ defmodule ExpenseTrackerWeb.CategoryLive do
       |> Decimal.round(0)
       |> Decimal.to_integer()
 
-    {:ok, socket |> assign(%{category: category, spendings_percentage: spendings_percentage})}
+    recent_expense = Expenses.get_recent_category_expense(category_id)
+
+    {:ok,
+     socket
+     |> assign(%{
+       category: category,
+       spendings_percentage: spendings_percentage,
+       recent_expense: recent_expense
+     })}
   end
 
   def render(assigns) do
@@ -32,6 +41,21 @@ defmodule ExpenseTrackerWeb.CategoryLive do
       <div>
         <h2>Total spendings</h2>
         <span>{@category.total_spendings}</span>
+      </div>
+    </div>
+
+    <div>
+      <h3 class="mt-5 mb-3">Recent expense</h3>
+      <div>
+        <div>
+          <span>Description: {@recent_expense.description}</span>
+        </div>
+        <div>
+          <span>Amount: {@recent_expense.amount}</span>
+        </div>
+        <div>
+          <span>Date: {@recent_expense.date}</span>
+        </div>
       </div>
     </div>
     """
