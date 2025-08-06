@@ -51,14 +51,5 @@ defmodule ExpenseTracker.Categories.Category do
     else
       changeset
     end
-
-    # validate_change(changeset, field, fn _, value ->
-    #   if Decimal.compare(value, Decimal.new(0)) == :lt &&
-    #        Decimal.compare(value, Decimal.new(0)) == :eq do
-    #     [{field, "must be zero or greater"}]
-    #   else
-    #     []
-    #   end
-    # end)
   end
 end
