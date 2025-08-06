@@ -10,7 +10,6 @@ defmodule ExpenseTracker.ExpensesTest do
 
     test "adds expense to category and updates category total_spendings", %{category: category} do
       attrs = %{
-        date: Date.utc_today(),
         description: "Wallmart run",
         amount: Decimal.new("25.6"),
         category_id: category.id
@@ -25,7 +24,6 @@ defmodule ExpenseTracker.ExpensesTest do
 
     test "returns an error when total_spendings exceeds the monthly budget", %{category: category} do
       attrs = %{
-        date: Date.utc_today(),
         description: "Shopping spree",
         amount: Decimal.new("4000"),
         category_id: category.id
@@ -45,14 +43,12 @@ defmodule ExpenseTracker.ExpensesTest do
 
     test "returns latest expense record by category", %{category: category} do
       attrs1 = %{
-        date: Date.utc_today(),
         description: "Wallmart run",
         amount: Decimal.new("25.6"),
         category_id: category.id
       }
 
       attrs2 = %{
-        date: Date.utc_today(),
         description: "McDonalds order",
         amount: Decimal.new("29.6"),
         category_id: category.id

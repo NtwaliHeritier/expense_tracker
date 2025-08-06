@@ -16,7 +16,7 @@ defmodule ExpenseTrackerWeb.CategoriesLive do
     ~H"""
     <h1 class="text-center text-bold mt-5">Categories list</h1>
     <.link patch={~p"/categories/new"}>
-      <h3 class="text-right mr-8 mt-5">Add New Category</h3>
+      <h3 class="text-right mr-8 mt-5">+ Add New Category</h3>
     </.link>
     <ul class="mx-5 mt-3" phx-update="stream" id="stream-id">
       <li :for={{dom_id, category} <- @streams.categories} id={dom_id} class="mb-3">
@@ -29,10 +29,12 @@ defmodule ExpenseTrackerWeb.CategoriesLive do
         <hr />
       </li>
     </ul>
+
     <.modal :if={@live_action == :new} id="new-category" show on_cancel={JS.patch(~p"/categories")}>
+      <h4>Add New Category</h4>
       <.form for={@form} phx-submit="save">
         <.input field={@form[:name]} placeholder="Name" />
-        <.input field={@form[:description]} placeholder="Description" />
+        <.input field={@form[:description]} placeholder="Description" type="textarea" />
         <.input field={@form[:monthly_budget]} placeholder="Monthly budget" />
         <.button class="mt-2">
           Save

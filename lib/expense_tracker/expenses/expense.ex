@@ -18,6 +18,11 @@ defmodule ExpenseTracker.Expenses.Expense do
   def changeset(expense, attrs) do
     expense
     |> cast(attrs, [:description, :amount, :date, :notes, :category_id])
-    |> validate_required([:description, :amount, :date, :category_id])
+    |> validate_required([:description, :amount, :category_id])
+    |> add_expense_date()
+  end
+
+  defp add_expense_date(changeset) do
+    change(changeset, %{date: Date.utc_today()})
   end
 end

@@ -5,24 +5,32 @@ defmodule ExpenseTracker.Expenses do
 
   import Ecto.Query
 
-  def add_expense_to_category(%{category_id: category_id, amount: amount} = attrs) do
-    category = Categories.get_category(category_id)
+  def add_expense_to_category(%{"category_id" => category_id, "amount" => amount} = attrs) do
+    changeset = change_expense(%Expense{}, attrs)
 
-    new_total_spendings = Decimal.add(category.total_spendings, amount)
+    case changeset do
+      %Ecto.Changeset{valid?: true} ->
+        category = Categories.get_category(category_id)
+        new_total_spendings = Decimal.add(category.total_spendings, amount)
 
-    case Decimal.compare(category.monthly_budget, new_total_spendings) do
-      :gt ->
-        Repo.transact(fn ->
-          {:ok, expense} = create_expense(attrs)
+        if Decimal.compare(category.monthly_budget, new_total_spendings) === :gt do
+          Repo.transact(fn ->
+            {:ok, expense} = create_expense(attrs)
 
-          {:ok, category} =
-            Categories.update_category(category, %{total_spendings: new_total_spendings})
+            {:ok, category} =
+              Categories.update_category(category, %{total_spendings: new_total_spendings})
 
-          {:ok, [expense, category]}
-        end)
+            {:ok, [expense, category]}
+          end)
+        else
+          {:error,
+           changeset
+           |> Ecto.Changeset.add_error(:amount, "Expenses cannot exceed monthly budget")
+           |> Map.put(:action, :insert)}
+        end
 
       _ ->
-        {:error, "Expenses cannot exceed montly budget"}
+        changeset |> Map.put(:action, :insert)
     end
   end
 
@@ -30,6 +38,10 @@ defmodule ExpenseTracker.Expenses do
     %Expense{}
     |> Expense.changeset(attrs)
     |> Repo.insert()
+  end
+
+  def change_expense(%Expense{} = expense, attrs \\ %{}) do
+    Expense.changeset(expense, attrs)
   end
 
   def get_recent_category_expense(category_id) do
