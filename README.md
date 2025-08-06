@@ -11,7 +11,7 @@ Built using:
 
 To run it locally:
 
-- clone this repo: `git clone https://github.com/NtwaliHeritier/tic_tac_toe`
+- clone this repo: `git clone https://github.com/NtwaliHeritier/expense_tracker`
 - Update your database credentials in `config/dev.exs` and `config/test.exs`
 - Run `mix setup` to setup the application
 - Run `mix phx.server` or `iex -S mix phx.server` to start your server
