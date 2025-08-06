@@ -85,9 +85,7 @@ defmodule ExpenseTrackerWeb.CategoryLive do
   end
 
   def handle_event("save", %{"expense" => params}, socket) do
-    case Expenses.add_expense_to_category(
-           Map.put(params, "category_id", socket.assigns.category_id)
-         ) do
+    case Expenses.add_expense_to_category(Map.put(params, "category", socket.assigns.category)) do
       {:ok, [expense, category]} ->
         {:noreply,
          socket

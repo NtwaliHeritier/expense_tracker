@@ -19,6 +19,7 @@ defmodule ExpenseTracker.Expenses.Expense do
     expense
     |> cast(attrs, [:description, :amount, :date, :notes, :category_id])
     |> validate_required([:description, :amount, :category_id])
+    |> foreign_key_constraint(:category)
     |> add_expense_date()
     |> validate_non_negative_expense_amount()
   end

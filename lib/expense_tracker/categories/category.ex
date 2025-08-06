@@ -7,6 +7,7 @@ defmodule ExpenseTracker.Categories.Category do
     field :description, :string
     field :monthly_budget, :decimal
     field :total_spendings, :decimal, default: Decimal.new("0")
+    field :lock_version, :integer, default: 1
 
     timestamps(type: :utc_datetime)
   end
@@ -18,6 +19,7 @@ defmodule ExpenseTracker.Categories.Category do
     |> validate_required([:name, :description, :monthly_budget, :total_spendings])
     |> validate_total_spendings_not_exceed_budget()
     |> validate_non_negative_monthly_budget()
+    |> optimistic_lock(:lock_version)
   end
 
   defp validate_total_spendings_not_exceed_budget(changeset) do
