@@ -26,14 +26,16 @@ defmodule ExpenseTrackerWeb.CategoryLive do
 
   def render(assigns) do
     ~H"""
-    <.link navigate={~p"/categories"}>All Categories</.link>
-    <h1 class="text-center capitalize">{@category.name}</h1>
-    <div class="w-100 h-7 mt-5 border border-black">
+    <.link navigate={~p"/categories"}>
+      <h1 class="mt-5 pl-8 underline underline-offset-4">All Categories</h1>
+    </.link>
+    <h1 class="text-center capitalize mt-2">{@category.name}</h1>
+    <div class="w-100 h-7 mt-5 mx-10 border border-black">
       <div class="bg-blue-500 h-7" style={"width:  #{@spendings_percentage}%"}>
         <span class="p-2">{@spendings_percentage}%</span>
       </div>
     </div>
-    <div class="flex justify-between mt-5">
+    <div class="flex justify-between mt-5 mx-10">
       <div>
         <h2>Monthly budget</h2>
         <span>{@category.monthly_budget}</span>
@@ -44,7 +46,7 @@ defmodule ExpenseTrackerWeb.CategoryLive do
       </div>
     </div>
 
-    <div>
+    <div class="mx-10">
       <h3 class="mt-5 mb-3">Recent expense</h3>
       <div>
         <div>

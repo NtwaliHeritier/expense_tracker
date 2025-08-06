@@ -10,10 +10,13 @@ defmodule ExpenseTrackerWeb.CategoriesLive do
 
   def render(assigns) do
     ~H"""
-    <h1 class="text-center text-bold">Categories list</h1>
-    <ul>
+    <h1 class="text-center text-bold mt-5">Categories list</h1>
+    <ul class="mx-5">
       <li :for={category <- @categories}>
-        <.link navigate={~p"/categories/#{category.id}"} class="capitalize">{category.name}</.link>
+        <.link navigate={~p"/categories/#{category.id}"} class="capitalize">
+          <h3 class="mb-3 underline underline-offset-4">{category.name}</h3>
+          <span>{category.description}</span>
+        </.link>
       </li>
     </ul>
     """
