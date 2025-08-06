@@ -23,12 +23,16 @@ defmodule ExpenseTracker.Categories.Category do
     total_spendings = get_field(changeset, :total_spendings)
     monthly_budget = get_field(changeset, :monthly_budget)
 
-    case Decimal.compare(total_spendings, monthly_budget) do
-      :gt ->
-        add_error(changeset, :total_spendings, "total spendings cannot exceed monthly budget")
+    if total_spendings && monthly_budget do
+      case Decimal.compare(total_spendings, monthly_budget) do
+        :gt ->
+          add_error(changeset, :total_spendings, "total spendings cannot exceed monthly budget")
 
-      _ ->
-        changeset
+        _ ->
+          changeset
+      end
+    else
+      changeset
     end
   end
 end

@@ -48,7 +48,7 @@ defmodule ExpenseTrackerWeb.CategoryLive do
 
     <div class="mx-10">
       <h3 class="mt-5 mb-3">Recent expense</h3>
-      <div>
+      <div :if={@recent_expense}>
         <div>
           <span>Description: {@recent_expense.description}</span>
         </div>
