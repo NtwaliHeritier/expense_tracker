@@ -5,12 +5,12 @@ defmodule ExpenseTracker.Expenses do
 
   import Ecto.Query
 
-  def add_expense_to_category(%{"category_id" => category_id, "amount" => amount} = attrs) do
+  def add_expense_to_category(%{"category" => category, "amount" => amount} = attrs) do
+    attrs = Map.put(attrs, "category_id", category.id)
     changeset = change_expense(%Expense{}, attrs)
 
     case changeset do
       %Ecto.Changeset{valid?: true} ->
-        category = Categories.get_category(category_id)
         new_total_spendings = Decimal.add(category.total_spendings, amount)
 
         if Decimal.compare(category.monthly_budget, new_total_spendings) === :gt do
