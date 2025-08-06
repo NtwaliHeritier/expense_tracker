@@ -1,18 +1,19 @@
-# ExpenseTracker
+# Expense Tracker
 
-To start your Phoenix server:
+This is an expense tracker app that allows users to create categories and add expenses to them.
+The UI shows a list of all categories, and allows users to view individual categories + add expenses to them.
 
-  * Run `mix setup` to install and setup dependencies
-  * Start Phoenix endpoint with `mix phx.server` or inside IEx with `iex -S mix phx.server`
+Built using:
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+- Elixir
+- Phoenix
+- Liveview
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+To run it locally:
 
-## Learn more
-
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+- clone this repo: `git clone https://github.com/NtwaliHeritier/tic_tac_toe`
+- Update your database credentials in `config/dev.exs` and `config/test.exs`
+- Run `mix setup` to setup the application
+- Run `mix phx.server` or `iex -S mix phx.server` to start your server
+- Now you can visit [`localhost:4000/categories`](http://localhost:4000/categories)
+- Run `mix test` for tests.
