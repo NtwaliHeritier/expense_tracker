@@ -13,5 +13,6 @@ defmodule ExpenseTracker.Repo.Migrations.CreateExpenses do
     end
 
     create index(:expenses, [:category_id])
+    create index(:expenses, [:id])
   end
 end
