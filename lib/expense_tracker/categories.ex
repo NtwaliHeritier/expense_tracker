@@ -6,6 +6,7 @@ defmodule ExpenseTracker.Categories do
     %Category{}
     |> Category.changeset(attrs)
     |> Repo.insert()
+    |> broadcast(:category_created)
   end
 
   def list_categories() do
@@ -20,5 +21,25 @@ defmodule ExpenseTracker.Categories do
     category
     |> Category.changeset(attrs)
     |> Repo.update()
+  end
+
+  def change_category(%Category{} = category, attrs \\ %{}) do
+    Category.changeset(category, attrs)
+  end
+
+  def broadcast({:ok, category}, tag) do
+    Phoenix.PubSub.broadcast(
+      ExpenseTracker.PubSub,
+      "categories",
+      {tag, category}
+    )
+
+    {:ok, category}
+  end
+
+  def broadcast({:error, _reason} = error, _tag), do: error
+
+  def subscribe do
+    Phoenix.PubSub.subscribe(ExpenseTracker.PubSub, "categories")
   end
 end
