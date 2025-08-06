@@ -67,9 +67,20 @@ defmodule ExpenseTracker.CategoriesTest do
       assert {:error,
               %Ecto.Changeset{
                 valid?: false,
-                errors: [total_spendings: {"total spendings cannot exceed monthly budget", []}]
+                errors: [total_spendings: {"Total spendings cannot exceed monthly budget", []}]
               }} =
                Categories.update_category(category, %{total_spendings: Decimal.new("4000")})
+    end
+
+    test "returns an ecto error when monthly budget is negative or zero", %{
+      category: category
+    } do
+      assert {:error,
+              %Ecto.Changeset{
+                valid?: false,
+                errors: [monthly_budget: {"Monthly budget can't be zero or negative", []}]
+              }} =
+               Categories.update_category(category, %{monthly_budget: Decimal.new("0")})
     end
   end
 end
